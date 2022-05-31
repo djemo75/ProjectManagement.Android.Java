@@ -44,7 +44,7 @@ public class ProjectsController {
 	}
 	
 	@GetMapping("")
-	public ResponseEntity<List<ProjectEntity>> getAllProjects(@RequestParam(required = false, defaultValue = "") String phrase) {
+	public ResponseEntity<List<ProjectEntity>> getAllProjects() {
 		List<ProjectEntity> projects = projectRepository.findAll();
 
 		return new ResponseEntity<List<ProjectEntity>>(projects, HttpStatus.OK);

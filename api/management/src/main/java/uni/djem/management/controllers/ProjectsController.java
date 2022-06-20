@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import io.swagger.v3.oas.annotations.Operation;
 import uni.djem.management.RequestDtos.CreateProjectRequest;
 import uni.djem.management.RequestDtos.EditProjectRequest;
 import uni.djem.management.ResponseDtos.MessageResponse;
@@ -43,6 +44,7 @@ public class ProjectsController {
 		this.userRepository=userRepository;
 	}
 	
+	@Operation(summary = "Get all projects")
 	@GetMapping("")
 	public ResponseEntity<List<ProjectEntity>> getAllProjects() {
 		List<ProjectEntity> projects = projectRepository.findAll();
@@ -50,6 +52,7 @@ public class ProjectsController {
 		return new ResponseEntity<List<ProjectEntity>>(projects, HttpStatus.OK);
 	}
 	
+	@Operation(summary = "Get a project")
 	@GetMapping("/")
 	public ResponseEntity<ProjectEntity> getProject(@RequestParam int id) {
 		ProjectEntity project = projectRepository.findById(id);
@@ -61,6 +64,7 @@ public class ProjectsController {
 		return new ResponseEntity<ProjectEntity>(project, HttpStatus.OK);
 	}
 	
+	@Operation(summary = "Get participated projects by userId")
 	@GetMapping("/participated")
 	public ResponseEntity<List<ProjectEntity>> getParticipatedProjectsByUserId(@RequestParam int userId) {
 		List<ProjectParticipantEntity> participatedProjects = projectParticipantRepository.findAllByUserIdOrderByCreatedDateDesc(userId);
@@ -74,12 +78,14 @@ public class ProjectsController {
 		return new ResponseEntity<List<ProjectEntity>>(projects, HttpStatus.OK);
 	}
 	
+	@Operation(summary = "Get all users")
 	@GetMapping("/all-users")
 	public ResponseEntity<List<UserEntity>> getAllUsers() {
 		List<UserEntity> users = userRepository.findAll();
 		return new ResponseEntity<List<UserEntity>>(users, HttpStatus.OK);
 	}
 	
+	@Operation(summary = "Get project users by projectId")
 	@GetMapping("/participated-users")
 	public ResponseEntity<List<UserEntity>> getProjectUsersByProjectId(@RequestParam int projectId) {
 		ProjectEntity project = projectRepository.findById(projectId);
@@ -98,6 +104,7 @@ public class ProjectsController {
 		return new ResponseEntity<List<UserEntity>>(users, HttpStatus.OK);
 	}
 	
+	@Operation(summary = "Create project")
 	@PostMapping("/")
 	public ResponseEntity<ProjectEntity> createProject(@RequestBody CreateProjectRequest projectRequest, HttpSession session){
 		UserEntity user = (UserEntity)session.getAttribute("user");
@@ -128,6 +135,7 @@ public class ProjectsController {
 		return new ResponseEntity<ProjectEntity>(project, HttpStatus.OK);
 	}
 	
+	@Operation(summary = "Add user to project")
 	@PostMapping("/add-user")
 	public ResponseEntity<ProjectParticipantEntity> addUserToProject(@RequestParam int userId, @RequestParam int projectId, HttpSession session){
 		UserEntity user = (UserEntity)session.getAttribute("user");
@@ -167,6 +175,7 @@ public class ProjectsController {
 		return new ResponseEntity<ProjectParticipantEntity>(participant, HttpStatus.OK);
 	}
 	
+	@Operation(summary = "Edit project")
 	@PutMapping("")
 	public ResponseEntity<MessageResponse> editProject(@RequestParam int id, @RequestBody EditProjectRequest projectRequest, HttpSession session) {
 		UserEntity user = (UserEntity)session.getAttribute("user");
@@ -198,7 +207,7 @@ public class ProjectsController {
 		return new ResponseEntity<MessageResponse>(response, HttpStatus.OK);
 	}
 	
-	
+	@Operation(summary = "Remove user from project")
 	@DeleteMapping("/remove-user")
 	public ResponseEntity<MessageResponse> removeUserFromProject(@RequestParam int userId, @RequestParam int projectId, HttpSession session){
 		UserEntity user = (UserEntity)session.getAttribute("user");
@@ -237,6 +246,7 @@ public class ProjectsController {
 		return new ResponseEntity<MessageResponse>(message, HttpStatus.OK);
 	}
 
+	@Operation(summary = "Delete project")
 	@Transactional
 	@DeleteMapping("")
 	public ResponseEntity<MessageResponse> deleteProject(@RequestParam int id, HttpSession session) {

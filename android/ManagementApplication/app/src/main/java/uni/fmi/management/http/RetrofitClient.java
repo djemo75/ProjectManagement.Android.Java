@@ -2,6 +2,9 @@ package uni.fmi.management.http;
 
 import android.content.Context;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -22,9 +25,13 @@ public class RetrofitClient {
             builder.addInterceptor(new ReceivedCookiesInterceptor(context)); // Configuration
             client = builder.build(); // Configuration
 
+            Gson gson = new GsonBuilder()
+                    .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                    .create();
+
             retrofit = new Retrofit.Builder().baseUrl(url)
                     .client(client) // Configuration
-                    .addConverterFactory(GsonConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create(gson))
                     .build();
         }
 

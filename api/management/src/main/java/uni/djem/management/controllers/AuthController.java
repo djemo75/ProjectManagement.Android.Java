@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import io.swagger.v3.oas.annotations.Operation;
 import uni.djem.management.RequestDtos.EditUserRequest;
 import uni.djem.management.RequestDtos.LoginRequest;
 import uni.djem.management.RequestDtos.RegisterRequest;
@@ -34,6 +35,7 @@ public class AuthController {
 		this.userRepository=userRepository;
 	}
 	
+	@Operation(summary = "Login")
 	@PostMapping(path = "/login")
 	public ResponseEntity<UserDetailsResponse> login(@RequestBody LoginRequest loginRequest, HttpSession session) throws Exception {
 		if(loginRequest.getUsername()=="" || loginRequest.getPassword()=="") {
@@ -52,6 +54,7 @@ public class AuthController {
 		return new ResponseEntity<UserDetailsResponse>(response, HttpStatus.OK);
 	}
 	
+	@Operation(summary = "Register")
 	@PostMapping(path = "/register")
 	public ResponseEntity<MessageResponse> register(@RequestBody RegisterRequest registerRequest, HttpSession session) throws Exception {
 		UserEntity user = userRepository.findByUsername(registerRequest.getUsername());
@@ -73,6 +76,7 @@ public class AuthController {
 		return new ResponseEntity<MessageResponse>(response, HttpStatus.OK);
 	}
 	
+	@Operation(summary = "Logout from account")
 	@PostMapping(path="/logout")
 	public ResponseEntity<MessageResponse> logout(HttpSession session) {
 		session.invalidate();
@@ -80,6 +84,7 @@ public class AuthController {
 		return new ResponseEntity<MessageResponse>(response, HttpStatus.OK);
 	}
 	
+	@Operation(summary = "Get account profile")
 	@GetMapping(path = "/profile")
 	public ResponseEntity<UserDetailsResponse> profile(HttpSession session) {
 		UserEntity userSession = (UserEntity) session.getAttribute("user");
@@ -95,6 +100,7 @@ public class AuthController {
 		return new ResponseEntity<UserDetailsResponse>(response, HttpStatus.OK);
 	}
 	
+	@Operation(summary = "Edit account profile")
 	@PutMapping("/edit-profile")
 	public ResponseEntity<MessageResponse> editUser(@RequestBody EditUserRequest userRequest, HttpSession session) {
 		UserEntity userSession = (UserEntity)session.getAttribute("user");

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import io.swagger.v3.oas.annotations.Operation;
 import uni.djem.management.RequestDtos.CreateCommentRequest;
 import uni.djem.management.ResponseDtos.MessageResponse;
 import uni.djem.management.entities.CommentEntity;
@@ -35,6 +36,7 @@ public class CommentController {
 		this.taskRepository=taskRepository;
 	}
 	
+	@Operation(summary = "Get a comment")
 	@GetMapping("/")
 	public ResponseEntity<CommentEntity> getComment(@RequestParam int id) {
 		CommentEntity comment = commentRepository.findById(id);
@@ -46,6 +48,7 @@ public class CommentController {
 		return new ResponseEntity<CommentEntity>(comment, HttpStatus.OK);
 	}
 	
+	@Operation(summary = "Get comments by taskId")
 	@GetMapping("/task")
 	public ResponseEntity<List<CommentEntity>> getCommentsByTaskId(@RequestParam int taskId) {
 		TaskEntity task = taskRepository.findById(taskId);
@@ -59,6 +62,7 @@ public class CommentController {
 		return new ResponseEntity<List<CommentEntity>>(comments, HttpStatus.OK);
 	}
 	
+	@Operation(summary = "Create comment")
 	@PostMapping("/")
 	public ResponseEntity<CommentEntity> createComment(@RequestBody CreateCommentRequest commentRequest, HttpSession session){
 		UserEntity user = (UserEntity)session.getAttribute("user");
@@ -93,6 +97,7 @@ public class CommentController {
 		return new ResponseEntity<CommentEntity>(comment, HttpStatus.OK);
 	}
 	
+	@Operation(summary = "Delete comment")
 	@DeleteMapping("")
 	public ResponseEntity<MessageResponse> deleteComment(@RequestParam int id, HttpSession session){
 		UserEntity user = (UserEntity)session.getAttribute("user");

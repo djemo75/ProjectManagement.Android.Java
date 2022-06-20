@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import io.swagger.v3.oas.annotations.Operation;
 import uni.djem.management.RequestDtos.CreateTaskRequest;
 import uni.djem.management.RequestDtos.EditTaskRequest;
 import uni.djem.management.ResponseDtos.MessageResponse;
@@ -41,6 +42,7 @@ public class TasksController {
 		this.userRepository=userRepository;
 	}
 	
+	@Operation(summary = "Get all tasks")
 	@GetMapping("")
 	public ResponseEntity<List<TaskEntity>> getAllTasks() {
 		List<TaskEntity> tasks = taskRepository.findAll();
@@ -48,6 +50,7 @@ public class TasksController {
 		return new ResponseEntity<List<TaskEntity>>(tasks, HttpStatus.OK);
 	}
 	
+	@Operation(summary = "Get a task")
 	@GetMapping("/")
 	public ResponseEntity<TaskEntity> getTask(@RequestParam int id) {
 		TaskEntity task = taskRepository.findById(id);
@@ -59,6 +62,7 @@ public class TasksController {
 		return new ResponseEntity<TaskEntity>(task, HttpStatus.OK);
 	}
 	
+	@Operation(summary = "Get tasks by projectId")
 	@GetMapping("/project")
 	public ResponseEntity<List<TaskEntity>> getTasksByProjectId(@RequestParam int projectId) {
 		ProjectEntity project = projectRepository.findById(projectId);
@@ -72,6 +76,7 @@ public class TasksController {
 		return new ResponseEntity<List<TaskEntity>>(tasks, HttpStatus.OK);
 	}
 	
+	@Operation(summary = "Get assigned tasks")
 	@GetMapping("/assigned")
 	public ResponseEntity<List<TaskEntity>> getAssignedTasks(HttpSession session) {
 		UserEntity user = (UserEntity)session.getAttribute("user");
@@ -85,6 +90,7 @@ public class TasksController {
 		return new ResponseEntity<List<TaskEntity>>(tasks, HttpStatus.OK);
 	}
 	
+	@Operation(summary = "Create task")
 	@PostMapping("/")
 	public ResponseEntity<TaskEntity> createTask(@RequestBody CreateTaskRequest taskRequest, HttpSession session){
 		UserEntity user = (UserEntity)session.getAttribute("user");
@@ -116,12 +122,14 @@ public class TasksController {
 		task.setStatus(taskRequest.getStatus());
 		task.setProject(project);
 		task.setAssignedUser(assigedUser);
+		task.setDeadline(taskRequest.getDeadline());
 		task.setCreatedDate(new Date());
 		
 		taskRepository.saveAndFlush(task);
 		return new ResponseEntity<TaskEntity>(task, HttpStatus.OK);
 	}
 	
+	@Operation(summary = "Edit task")
 	@PutMapping("")
 	public ResponseEntity<MessageResponse> editTask(@RequestParam int id, @RequestBody EditTaskRequest taskRequest, HttpSession session) {
 		UserEntity user = (UserEntity)session.getAttribute("user");
@@ -153,6 +161,7 @@ public class TasksController {
 		return new ResponseEntity<MessageResponse>(response, HttpStatus.OK);
 	}
 	
+	@Operation(summary = "Delete task")
 	@Transactional
 	@DeleteMapping("")
 	public ResponseEntity<MessageResponse> deleteTask(@RequestParam int id, HttpSession session){

@@ -16,35 +16,31 @@ import javax.persistence.Table;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.format.annotation.DateTimeFormat;
-
 
 @Entity
-@Table(name = "tasks")
-public class TaskEntity implements Serializable {
+@Table(name = "files")
+public class FileEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(name="title", length = 200, nullable = false)
-	private String title;
+	@Column(name="fileName", length = 200, nullable = false)
+	private String fileName;
 	
-	@Column(name="content", length = 1000, nullable = false)
-	private String content;
+	@Column(name="fileCode", length = 200, nullable = false)
+	private String fileCode;
 	
-	@Column(name="status", length = 1000, nullable = false)
-	private String status;
+	@Column(name="path", length = 200, nullable = false)
+	private String path;
+	
+	@Column(name="contentType", length = 200, nullable = true)
+	private String contentType;
 	
 	@CreatedDate
 	@Column(name="created_date", nullable = false)
 	private Date createdDate;
-	
-	@CreatedDate
-	@Column(name="deadline", nullable = true)
-	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
-	private Date deadline;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@OnDelete(action = OnDeleteAction.CASCADE)
@@ -53,8 +49,8 @@ public class TaskEntity implements Serializable {
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@OnDelete(action = OnDeleteAction.CASCADE)
-	@JoinColumn(name = "assigned_user_id")
-	private UserEntity assignedUser;
+	@JoinColumn(name = "user_id")
+	private UserEntity user;
 
 	public int getId() {
 		return id;
@@ -64,28 +60,36 @@ public class TaskEntity implements Serializable {
 		this.id = id;
 	}
 
-	public String getTitle() {
-		return title;
+	public String getFileName() {
+		return fileName;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 
-	public String getContent() {
-		return content;
+	public String getFileCode() {
+		return fileCode;
 	}
 
-	public void setContent(String content) {
-		this.content = content;
+	public void setFileCode(String fileCode) {
+		this.fileCode = fileCode;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
 	}
 	
-	public String getStatus() {
-		return status;
+	public String getContentType() {
+		return contentType;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
 	}
 
 	public Date getCreatedDate() {
@@ -94,14 +98,6 @@ public class TaskEntity implements Serializable {
 
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
-	}
-	
-	public Date getDeadline() {
-		return deadline;
-	}
-
-	public void setDeadline(Date deadline) {
-		this.deadline = deadline;
 	}
 
 	public ProjectEntity getProject() {
@@ -112,11 +108,11 @@ public class TaskEntity implements Serializable {
 		this.project = project;
 	}
 
-	public UserEntity getAssignedUser() {
-		return assignedUser;
+	public UserEntity getUser() {
+		return user;
 	}
 
-	public void setAssignedUser(UserEntity assignedUser) {
-		this.assignedUser = assignedUser;
+	public void setUser(UserEntity user) {
+		this.user = user;
 	}
 }

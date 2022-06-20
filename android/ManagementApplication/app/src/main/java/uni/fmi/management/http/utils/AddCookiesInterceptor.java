@@ -30,16 +30,6 @@ public class AddCookiesInterceptor implements Interceptor {
 
         HashSet<String> preferences = (HashSet<String>) PreferenceManager.getDefaultSharedPreferences(context).getStringSet(PREF_COOKIES, new HashSet<String>());
 
-        // Use the following if you need everything in one line.
-        // Some APIs die if you do it differently.
-        /*String cookiestring = "";
-        for (String cookie : preferences) {
-            String[] parser = cookie.split(";");
-            cookiestring = cookiestring + parser[0] + "; ";
-        }
-        builder.addHeader("Cookie", cookiestring);
-        */
-
         for (String cookie : preferences) {
             builder.addHeader("Cookie", cookie);
         }

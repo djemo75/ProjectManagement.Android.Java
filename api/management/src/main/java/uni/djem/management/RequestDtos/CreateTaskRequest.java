@@ -1,11 +1,14 @@
 package uni.djem.management.RequestDtos;
 
+import java.util.Date;
+
 public class CreateTaskRequest {
 	private String title;
 	private String content;
 	private String status;
 	private int projectId;
 	private int assignedUserId;
+	private Date deadline;
 	
 	public String getTitle() {
 		return title;
@@ -36,5 +39,11 @@ public class CreateTaskRequest {
 	}
 	public void setAssignedUserId(int assignedUserId) {
 		this.assignedUserId = assignedUserId;
+	}
+	public Date getDeadline() {
+		return deadline;
+	}
+	public void setDeadline(Date deadline) {
+		this.deadline = deadline;
 	}
 }

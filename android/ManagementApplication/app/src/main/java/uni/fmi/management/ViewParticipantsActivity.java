@@ -155,7 +155,7 @@ public class ViewParticipantsActivity extends AppCompatActivity {
         Button cancelParticipantB = addParticipantView.findViewById(R.id.cancel_button);
 
         ArrayList<String> options = new ArrayList<>();
-        // Show only users who are not part of the project
+        // TO-DO Show only users who are not part of the project
         ArrayList<UserDetails> availableForAdding = new ArrayList<>();
         System.out.println(participants.size());
         System.out.println(users.size());

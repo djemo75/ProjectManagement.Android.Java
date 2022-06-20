@@ -86,11 +86,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
         android:orientation="horizontal">
         <Button
             android:id="@+id/view_project_delete"
-            android:layout_width="wrap_content"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Delete"
@@ -98,33 +97,80 @@
             android:textColor="#FFF"
             android:background="#c5c5c5"
             android:layout_marginRight="5dp"
+            android:layout_marginTop="10dp"
             />
         <Button
             android:id="@+id/view_project_edit"
-            android:layout_width="wrap_content"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Edit"
             android:textAllCaps="false"
             android:textColor="#FFF"
             android:background="#345aa0"
-            android:layout_marginLeft="5dp"/>
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:orientation="horizontal">
         <Button
             android:id="@+id/view_project_participants"
-            android:layout_width="wrap_content"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="View Participants"
+            android:text="Participants"
+            android:textAllCaps="false"
+            android:textColor="#FFF"
+            android:background="#c5c5c5"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="10dp"
+            />
+        <Button
+            android:id="@+id/view_project_files"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Files"
             android:textAllCaps="false"
             android:textColor="#FFF"
             android:background="#345aa0"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
             />
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <Button
+            android:id="@+id/view_project_add_task"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Create task"
+            android:textAllCaps="false"
+            android:textColor="#FFF"
+            android:background="#345aa0"
+            android:layout_marginTop="10dp"
+            />
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/projectTasksRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical" />
+        </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
